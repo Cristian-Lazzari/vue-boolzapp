@@ -1,9 +1,12 @@
 const app = Vue.createApp({
     data() {
         return{
+            searchKey:'',
+            activeIndex: 1,
+            newMexText: '',
             contacts: [
                 {
-                    selected:true,
+                    
                     name: 'Michele',
                     avatar: './img/avatar_1.png',
                     visible: true,
@@ -172,13 +175,30 @@ const app = Vue.createApp({
         adjustImg(string){
             return string.replace("png","jpg")
         },
-        selectChat(obj){   
-            this.contacts.forEach(element => {
-                if(element.hasOwnProperty('selected')){
-                    delete element.selected
-                }
-            });
-            obj.selected = true;
+        changeIndex(i){
+            this.activeIndex = i
+        },
+        fakeRisposta(){
+            newMexR = {
+                date: '',
+                message: 'ciaooooooo',
+                status: 'received'
+            };
+            this.contacts[this.activeIndex].messages.push(newMexR);
+
+        },
+        pushMessage(text){
+            newMex = {
+                date: '',
+                message: text,
+                status: 'sent'
+            };
+            this.contacts[this.activeIndex].messages.push(newMex);
+            this.newMexText=''
+            setTimeout(this.fakeRisposta, 2000)
+        },
+        searchFun(){
+            arrkey= this.searchKey.split('')           
         }
      }
 });

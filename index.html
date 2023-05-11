@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>boolzap</title>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js" defer></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js" defer ></script>
     <script src="script.js" defer ></script>
     <link rel="stylesheet" href="style.css">
@@ -18,14 +19,14 @@
             </div>
             <div class="search d-c-j">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text">
+                <input v-model="searchKey" @keyup.enter="searchFun" type="text" >
             </div>
             <div class="list-contact">
                 <div 
-                v-for="contact in contacts" 
+                v-for="(contact, i) in contacts" 
                 class="chat"
-                @click="selectChat(contact)"
-                :class="{active: contact.hasOwnProperty('selected')}"
+                @click="changeIndex(i)"
+                :class="{active: activeIndex==i}"
                 >
                     <img :src="adjustImg(contact.avatar)" alt="">
 
@@ -44,38 +45,31 @@
         <main>
             <div class="chat-profile d-c">
                 <img
-                v-for="contact in contacts" 
-                :src="adjustImg(contact.avatar)"
-                v-show="contact.hasOwnProperty('selected')" 
+                
+                :src="adjustImg(contacts[activeIndex].avatar)"
+                
                 alt="">
-                <div 
-                v-for="contact in contacts"
-                v-show="contact.hasOwnProperty('selected')" 
+
+                <div
                 class="contact" 
                 >
-                <h3>{{contact.name}}</h3>
-                <p>ultimo accesso:{{contact.messages[0].date}} </p>
+                <h3>{{contacts[activeIndex].name}}</h3>
+                <p>ultimo accesso:{{contacts[activeIndex].messages[0].date}} </p>
             </div>
             </div>
-            <div 
-            v-for="contact in contacts"
-            v-show="contact.hasOwnProperty('selected')"
-            class="chat-section "
-            >
+            <div class="chat-section ">
                 <div class="sub-container">
                     <div 
-                    v-for="message in contact.messages"
+                    v-for="message in contacts[activeIndex].messages"
                     class="message"
                     :class="message.status == 'sent' ? 'sent' : ''">
                         {{message.message}}
-                    </div>
- 
-                    
+                    </div>   
                 </div>
                 
             </div>
             <div class="input-section d-c-j">
-                <input type="text">
+                <input type="text" v-model="newMexText" @keyup.enter="pushMessage(newMexText)">
             </div>
         </main>
     </div>
