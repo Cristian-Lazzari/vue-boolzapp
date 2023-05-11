@@ -115,10 +115,18 @@ main{
     border-radius: 10px;
     max-width: 60%;
     min-width: 30%;
+    position: relative;
 }
 .sent{
     align-self: flex-end;
 }
 input{
     width: 80%;
+}
+.date{
+    position: absolute;
+    bottom: 4px;
+    right:4px;
+    font-size: 0.5em;
+    color: rgb(31, 31, 31);
 }

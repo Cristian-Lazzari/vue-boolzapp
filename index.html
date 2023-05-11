@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>boolzap</title>
-    <script src="https://cdn.jsdelivr.net/npm/luxon@3.3.0/build/global/luxon.min.js" defer></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js" defer ></script>
     <script src="script.js" defer ></script>
     <link rel="stylesheet" href="style.css">
@@ -18,12 +17,14 @@
                 <h3>TheLezz</h3>
             </div>
             <div class="search d-c-j">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input v-model="searchKey" @keyup.enter="searchFun" type="text" >
+                <i @click="searcing(searchKey)"
+                class="fa-solid fa-magnifying-glass"></i>
+                <input v-model="searchKey" type="text" >
             </div>
             <div class="list-contact">
                 <div 
-                v-for="(contact, i) in contacts" 
+                v-for="(contact, i) in contacts"
+                v-show="contact.visible" 
                 class="chat"
                 @click="changeIndex(i)"
                 :class="{active: activeIndex==i}"
@@ -32,10 +33,10 @@
 
                     <div class="content">
                         <span>{{contact.name}}</span>
-                        <span>{{contact.messages[0].message}}</span>
+                        <span>{{contact.messages[contact.messages.length - 1].message}}</span>
                     </div>
                     <div class="last-message-time">
-                        12:00
+                        {{adjDate(contact.messages[0].date)}}
                     </div>
                 </div>
                
@@ -63,7 +64,7 @@
                     v-for="message in contacts[activeIndex].messages"
                     class="message"
                     :class="message.status == 'sent' ? 'sent' : ''">
-                        {{message.message}}
+                        {{message.message}} <div class="date">{{adjDate(message.date)}}</div>
                     </div>   
                 </div>
                 
@@ -73,6 +74,7 @@
             </div>
         </main>
     </div>
+    
     <script src="https://kit.fontawesome.com/9337291c61.js" crossorigin="anonymous"></script>
 </body>
 </html>

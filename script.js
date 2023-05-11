@@ -2,7 +2,7 @@ const app = Vue.createApp({
     data() {
         return{
             searchKey:'',
-            activeIndex: 1,
+            activeIndex: 0,
             newMexText: '',
             contacts: [
                 {
@@ -176,7 +176,18 @@ const app = Vue.createApp({
             return string.replace("png","jpg")
         },
         changeIndex(i){
-            this.activeIndex = i
+            this.activeIndex = i;
+
+        },
+        array_move(arr, old_index, new_index) {
+            if (new_index >= arr.length) {
+                var k = new_index - arr.length + 1;
+                while (k--) {
+                    arr.push(undefined);
+                }
+            }
+            arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+            return arr; // for testing
         },
         fakeRisposta(){
             newMexR = {
@@ -187,19 +198,41 @@ const app = Vue.createApp({
             this.contacts[this.activeIndex].messages.push(newMexR);
 
         },
-        pushMessage(text){
+        pushMessage(text, i){
+            orario = new Date();
+            rightorario = (orario.getHours() + orario.getMinutes())
             newMex = {
-                date: '',
+                date: rightorario,
                 message: text,
                 status: 'sent'
             };
             this.contacts[this.activeIndex].messages.push(newMex);
             this.newMexText=''
-            setTimeout(this.fakeRisposta, 2000)
+            setTimeout(this.fakeRisposta, 2000);
+            this.array_move(this.contacts, this.activeIndex, 0);
+            this.activeIndex=0;
         },
         searchFun(){
             arrkey= this.searchKey.split('')           
-        }
+        },
+        adjDate(date){
+            arrdate = date.split('');
+            newarrdate = arrdate.splice(0,5,13)
+            return newarrdate.join('')
+        },
+        searcing(key){ 
+            tester = key
+            this.contacts.forEach(function search(tester){
+                value = this.name.search(tester)
+                console.log(value)
+            if(value === -1){
+                this.visible = false;
+                this.name = 'soncojo'
+            }else{
+                this.visible = true
+            }
+            });
+        },
      }
 });
 app.mount('#root');
