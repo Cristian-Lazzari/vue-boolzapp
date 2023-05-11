@@ -1,6 +1,7 @@
 *{
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 body{
     background-color: black;
@@ -15,12 +16,12 @@ img{
     border-radius: 100px;
 }
 .container{
-    width: 80%;
+    width: 100vw;
     height: 80%;
     background-color: white;
-    display: grid;
-    grid-template-columns: 2fr 3fr;
+    display: flex;
 }
+
 /*********************
 -------HELPER--------
 **********************/
@@ -33,11 +34,14 @@ img{
     align-items: center;
     justify-content: center;
 }
+.active{
+    background-color: rgba(0, 0, 0, 0.282);
+}
 /*********************
 -------SIDE-MAIN-----
 **********************/
 .side-main{
-    
+    width: 30%;
     background-color: rgb(206, 210, 211);
 }
 .user{
@@ -50,6 +54,7 @@ img{
     gap: 0.5rem;
 }
 .list-contact{
+    
     height: 60vh;
     overflow-y: auto;
 }
@@ -59,14 +64,26 @@ img{
     gap: .4em;
     padding: 0.3rem;
 }
-.content{
-    flex: 1 1 auto;
+.content {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+}
+.content span{
+    
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+.content span:first-child{
+    font-weight: bolder;
 }
 /*********************
 -------MAIN----------
 **********************/
 main{
     height: 80vh;
+    width: 70%;
     display: flex;
     flex-direction: column;
 }

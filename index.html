@@ -21,11 +21,17 @@
                 <input type="text">
             </div>
             <div class="list-contact">
-                <div class="chat">
-                    <img src="img/avatar_4.jpg" alt="">
+                <div 
+                v-for="contact in contacts" 
+                class="chat"
+                @click="selectChat(contact)"
+                :class="{active: contact.hasOwnProperty('selected')}"
+                >
+                    <img :src="adjustImg(contact.avatar)" alt="">
+
                     <div class="content">
-                        <h3>filberto</h3>
-                        <p>ultimo messaggio</p>
+                        <span>{{contact.name}}</span>
+                        <span>{{contact.messages[0].message}}</span>
                     </div>
                     <div class="last-message-time">
                         12:00
@@ -37,23 +43,33 @@
         </div>
         <main>
             <div class="chat-profile d-c">
-                <img src="img/avatar_2.jpg" alt="">
-                <div class="contact">
-                    <h3>michele</h3>
-                    <p>ultimo accesso: </p>
-                </div>
+                <img
+                v-for="contact in contacts" 
+                :src="adjustImg(contact.avatar)"
+                v-show="contact.hasOwnProperty('selected')" 
+                alt="">
+                <div 
+                v-for="contact in contacts"
+                v-show="contact.hasOwnProperty('selected')" 
+                class="contact" 
+                >
+                <h3>{{contact.name}}</h3>
+                <p>ultimo accesso:{{contact.messages[0].date}} </p>
             </div>
-            <div class="chat-section ">
+            </div>
+            <div 
+            v-for="contact in contacts"
+            v-show="contact.hasOwnProperty('selected')"
+            class="chat-section "
+            >
                 <div class="sub-container">
-                    <div class="message sent">
-                        ciao caio ciao cioa
+                    <div 
+                    v-for="message in contact.messages"
+                    class="message"
+                    :class="message.status == 'sent' ? 'sent' : ''">
+                        {{message.message}}
                     </div>
-                    <div class="message">
-                        ciao caio ciao cioa
-                    </div>
-                    <div class="message sent">
-                        ciao caio ciao cioa
-                    </div>
+ 
                     
                 </div>
                 
