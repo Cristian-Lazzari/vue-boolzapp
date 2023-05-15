@@ -190,25 +190,29 @@ const app = Vue.createApp({
             return arr; // for testing
         },
         fakeRisposta(){
+            orario = new Date();
+            rightorario = `${orario.getHours()} : ${orario.getMinutes()}`;
             newMexR = {
-                date: '',
+                date: rightorario,
                 message: 'ciaooooooo',
                 status: 'received'
             };
-            this.contacts[this.activeIndex].messages.push(newMexR);
-
+            this.contacts[0].messages.push(newMexR);
+            
         },
-        pushMessage(text, i){
+        
+        pushMessage(text){
             orario = new Date();
-            rightorario = (orario.getHours() + orario.getMinutes())
+            rightorario = `${orario.getHours()} : ${orario.getMinutes()}`;
+            righti = this.activeIndex;
             newMex = {
                 date: rightorario,
                 message: text,
                 status: 'sent'
             };
-            this.contacts[this.activeIndex].messages.push(newMex);
+            this.contacts[righti].messages.push(newMex);
             this.newMexText=''
-            setTimeout(this.fakeRisposta, 2000);
+            setTimeout(this.fakeRisposta, 1000);
             this.array_move(this.contacts, this.activeIndex, 0);
             this.activeIndex=0;
         },
@@ -220,19 +224,21 @@ const app = Vue.createApp({
             newarrdate = arrdate.splice(0,5,13)
             return newarrdate.join('')
         },
-        searcing(key){ 
-            tester = key
-            this.contacts.forEach(function search(tester){
-                value = this.name.search(tester)
-                console.log(value)
-            if(value === -1){
-                this.visible = false;
-                this.name = 'soncojo'
+        searcing(key){  
+            newkey= key.toLowerCase()
+            this.contacts.forEach( element =>{
+              
+            if(element.name.toLowerCase().search(newkey) === -1){
+                element.visible = false;
+                console.log(element.name.search(newkey))
             }else{
-                this.visible = true
+                element.visible = true
             }
             });
         },
+        deleteM(){
+        
+        }
      }
 });
 app.mount('#root');

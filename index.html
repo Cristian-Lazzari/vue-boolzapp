@@ -64,7 +64,11 @@
                     v-for="message in contacts[activeIndex].messages"
                     class="message"
                     :class="message.status == 'sent' ? 'sent' : ''">
-                        {{message.message}} <div class="date">{{adjDate(message.date)}}</div>
+                        {{message.message}} <div class="date">{{message.date}}</div>
+                        <div class="info-close"><select name="ic" id="">
+                            <option name="ic" value="delete">Cancella</option>
+                            <option name="ic" @click="deleteM" value="info">info</option>
+                        </select></div>
                     </div>   
                 </div>
                 

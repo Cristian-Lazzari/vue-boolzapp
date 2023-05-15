@@ -130,3 +130,16 @@ input{
     font-size: 0.5em;
     color: rgb(31, 31, 31);
 }
+.info-close{
+    position: absolute;
+    top: 3px;
+    right:5px;
+    opacity: 0;
+    background-color: none;
+    border: 0;
+}
+.info-close:hover{
+    opacity: .9;
+    transition:all .4s;
+    cursor: pointer;
+}
